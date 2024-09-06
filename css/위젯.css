@@ -17,10 +17,11 @@ body{
 
 .wrapper{}
 .wrapper>header{
-    height : 100px;
+   
     position:relative;
     z-index:1000;
     background-color: white;
+    padding:20px;
 }
 .wrapper>main{}
 .wrapper>main>section{
