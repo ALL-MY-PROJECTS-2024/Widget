@@ -27,7 +27,7 @@ body{
 .wrapper>header>.top-header{
     height : 50px;
     display:flex;
-    justify-content: right;
+    justify-content: space-between;
     align-items: center;
 }
 .wrapper>main{}
