@@ -8,6 +8,11 @@ document.addEventListener("DOMContentLoaded", function () {
   let timerId = 0;
   let TimerIntervalList = [];
 
+  //시계Interval 저장
+  let clockId = 0 ;
+  let clockIntervalList = [];
+
+
   //ITEM 이동
   let isMoving = false;
   let isDelete = false;
@@ -671,9 +676,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
   //------------------------
-  //CLOCK
+  //CLOCK - https://re-hwi.tistory.com/118
   //------------------------
   function createClock(parentNode) {
+
     console.log("createClock...");
     const newDiv = document.createElement("div");
     newDiv.classList.add("item");
@@ -738,13 +744,102 @@ document.addEventListener("DOMContentLoaded", function () {
     controlDiv.appendChild(digitalBtn);
     controlDiv.appendChild(cancelBtn);
 
+
     const BodyDiv = document.createElement("div");
     BodyDiv.classList.add("body");
+    BodyDiv.setAttribute('style','height:calc(100% - 25px)')
+
+    const clockDiv = document.createElement('div')
+    clockDiv.classList.add('clock')
+    clockDiv.setAttribute('style','position:relative;width:100%;height:100%;display:flex;justify-content:center;align-items:center;')
+    
+    const center = document.createElement('div')
+    center.classList.add('center')
+    center.setAttribute('style','')
+
+    const hourEl = document.createElement('div')
+    hourEl.classList.add('hour')
+
+
+    const minEl = document.createElement('div')
+    minEl.classList.add('min')
+    minEl.setAttribute('style','')
+
+    const secEl = document.createElement('div')
+    secEl.classList.add('sec')
+    secEl.setAttribute('style','')
+
+    center.appendChild(hourEl)
+    center.appendChild(minEl)
+    center.appendChild(secEl)
+
+    clockDiv.appendChild(center)
+    
+    
+    BodyDiv.appendChild(clockDiv)
+    //   <div class="clock">
+    //     <div id="center"></div>
+    //     <div id="hour"></div>
+    //     <div id="min"></div>
+    //     <div id="sec">
+    //   </div>
 
     newDiv.appendChild(headDiv);
     newDiv.appendChild(BodyDiv);
 
     parentNode.appendChild(newDiv);
+
+
+    //--------------------------------
+
+    setInterval(() =>{
+            // 현재 날짜 time에 할당
+          const time =new Date()
+          
+          // time에서 시간만 추출 (시, 분, 초)
+          const hour = time.getHours(); //0~23
+          const min = time.getMinutes();//0~59
+          const sec = time.getSeconds();//0~59
+          
+          // 화면상의 객체 선택
+          const hh = hourEl
+          const mm = minEl
+          const ss = secEl
+          console.log("hh",hh,"mm",mm,"ss",ss)
+
+          // 각도 선택
+          if (hour >= 12){
+            const DegHour = (hour - 12) * 30 + min * (360 / 12 / 60) // 분을 고려해서 시침이 한번에 움직이지 않게 하기 위함 
+            const DegMin = min * 6
+            const DegSec = sec * 6
+            
+            hh.setAttribute('style',`rotate(${DegHour}deg);`)
+            mm.setAttribute('style',`rotate(${DegMin}deg);`)
+            ss.setAttribute('style',`rotate(${DegSec}deg);`)
+            
+            }
+            else{
+           
+                const DegHour = (hour - 12) * 30 + min * (360 / 12 / 60)  // 0.5를 곱해 60분기준 30도를 추가 ex) 30분이라면 15도의 각도 추가
+                const DegMin = min * 6
+                const DegSec = sec * 6
+                console.log("DegHour",DegHour,"DegMin",DegMin,"DegSec",DegSec)
+
+                hh.setAttribute('style',`transform:rotate(${DegHour}deg);`)
+                mm.setAttribute('style',`transform:rotate(${DegMin}deg);`)
+                ss.setAttribute('style',`transform:rotate(${DegSec}deg);`)
+
+
+                
+                
+
+
+            }
+    },1000)
+  //---------------------------------
+
+
+
     return newDiv;
   }
 
