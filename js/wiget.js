@@ -20,7 +20,9 @@ document.addEventListener("DOMContentLoaded", function () {
   let originalWidth, originalHeight, originalX, originalY;
 
 
- 
+  //-----------------------------------
+  // ASIDE 클릭시 
+  //-----------------------------------
   const todoEl = document.querySelector("#todo");
   const timerEl = document.querySelector("#timer");
 
@@ -292,7 +294,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     //컨트롤 박스
     const controlBox = document.createElement("div");
-    controlBox.setAttribute('style','color:white;padding:5px 0;border-bottom:1px solid;padding:2px;display:flex;justify-content:right;align-items:center;background-color: black')
+    controlBox.setAttribute('style','color:black;font-weight:600;padding:5px 0;border-bottom:1px solid;padding:2px;display:flex;justify-content:right;align-items:center;background-color:#FFD67F;')
     headDiv.appendChild(controlBox)
 
     //컨트롤 박스(제목)
@@ -505,16 +507,40 @@ document.addEventListener("DOMContentLoaded", function () {
     
     const headDiv = document.createElement('div');
     headDiv.classList.add('head')
-    const addInput = document.createElement('input');
-    const addBtn = document.createElement('span');
 
-    const BodyDiv = document.createElement('div');
-    BodyDiv.classList.add('body')
+    //컨트롤박스
+    const controlDiv =document.createElement('div')
+    controlDiv.classList.add('control')
+    controlDiv.setAttribute('style','border-bottom:1px solid;display:flex;justify-content:right;align-items:center;gap:5px;height:20px;')
+    headDiv.appendChild(controlDiv);
+    
+    const title = document.createElement('span')
+    title.innerHTML='제목없음'
+    title.setAttribute('style','font-size:.9rem;flex-grow:1')
+
+    //시작버튼
+    const startBtn = document.createElement("div");
+    startBtn.classList.add('material-symbols-outlined')
+    startBtn.innerHTML='play_arrow'
+    startBtn.setAttribute('style','font-size:.9rem;cursor:pointer;')
+    startBtn.addEventListener('click',()=>{
+      console.log("clicked.")
+    })
+    //정지버튼
+    const stopBtn = document.createElement("div");
+    stopBtn.classList.add('material-symbols-outlined')
+    stopBtn.innerHTML='stop'
+    stopBtn.setAttribute('style','font-size:.9rem;cursor:pointer;')
+    stopBtn.addEventListener('click',()=>{
+      console.log("clicked.")
+    })
 
 
     //취소버튼
     const cancelBtn = document.createElement("div");
-    cancelBtn.innerHTML = "x";
+    cancelBtn.classList.add('material-symbols-outlined')
+    cancelBtn.setAttribute('style','font-size:.9rem;cursor:pointer;')
+    cancelBtn.innerHTML = "cancel";
     newDiv.appendChild(cancelBtn);
 
     cancelBtn.addEventListener("click", (e) => {
@@ -526,6 +552,23 @@ document.addEventListener("DOMContentLoaded", function () {
       }
       e.preventDefault();
     });
+
+    controlDiv.appendChild(title)
+    controlDiv.appendChild(startBtn)
+    controlDiv.appendChild(stopBtn)
+    controlDiv.appendChild(cancelBtn)
+
+    
+
+
+    const BodyDiv = document.createElement('div');
+    BodyDiv.setAttribute('style','width:100%;height:calc(100% - 20px);position:relative;')
+    BodyDiv.classList.add('body')
+
+    const Timer = document.createElement('div')
+    Timer.setAttribute('style','width:100%;height:100%;font-size:1.8rem;display:flex;justify-content:center;align-items:center;gap:5px;')
+    Timer.innerHTML=`<span>00:00:00</span><span style="font-size:.9rem;position:absolute;top:0;right:0;">(HH:MM:SS)</<span>`;
+    BodyDiv.appendChild(Timer)
 
     newDiv.appendChild(headDiv)
     newDiv.appendChild(BodyDiv)
